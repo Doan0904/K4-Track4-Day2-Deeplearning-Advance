@@ -275,6 +275,16 @@ class TestBenchmarkAndData(unittest.TestCase):
         self.assertEqual(r["batch"], 1)
         self.assertGreater(r["images_per_s"], 0)
 
+    def test_multi_model_latency_per_model_size(self):
+        # Swin/ViT cố định kích thước: mỗi model phải nhận đúng kích thước nó được train (lỗi thật ở Bước 3)
+        a = tiny_timm("resnet18")
+        b = tiny_timm("vit_tiny_patch16_224", img_size=32)
+        r = BM.multi_model_latency([a, b], [64, 32], "fp32", "cpu", warmup=10, iters=50)
+        self.assertEqual(r["k_models"], 2)
+        self.assertEqual(r["img_size"], "64/32")
+        with self.assertRaises(AssertionError):
+            BM.multi_model_latency([b], 64, "fp32", "cpu", warmup=10, iters=50)
+
     def test_transforms(self):
         img = torch.randint(0, 256, (3, 256, 256), dtype=torch.uint8)
         for aug in D.AUG_CHOICES:

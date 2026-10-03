@@ -512,31 +512,60 @@ class Lab:
                 add(f"I04_{r}", f"độ phân giải kiểm tra {r}", P(["center"]), 1, None,
                     note=notes.get(f"res{r}", "không áp dụng"))
                 rows[-1].update({k: None for k in ("val_macro_f1", "val_top1", "val_ece", "val_nll")})
-        # ensemble (I05): xác suất val đã lưu của từng lần chạy
+        # ensemble (I05): xác suất val đã lưu của từng lần chạy. Mỗi model chạy ở kích thước nó được train
+        # (B01-B08 và T00 train ở 224; công thức chung kết có thể là 256) nên độ trễ đo theo từng kích thước.
+        failures = {}
+
+        class guard:  # thí nghiệm phụ lỗi thì ghi lại và chạy tiếp, không làm hỏng cả Bước 3
+            def __init__(self, name):
+                self.name = name
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, et, ev, tb):
+                if ev is None:
+                    return False
+                import traceback
+                failures[self.name] = f"{et.__name__}: {str(ev)[:300]}"
+                print(f"!!! CẢNH BÁO: {self.name} lỗi, bỏ qua và chạy tiếp:\n{traceback.format_exc()}", flush=True)
+                torch.cuda.empty_cache()
+                return True
+
         def val_probs(e, s=0):
             z = np.load(self.out / "runs" / e / f"seed{s}" / "val_outputs.npz")
             assert list(z["filenames"]) == list(names), f"{e}: thứ tự file val khác"
             return _softmax(z["logits"])
+
+        def load_exp(e, s=0):
+            c = TR.load_config(e, s, str(self.out / "runs"))
+            return TR.load_trained(c, dev)[0], c.img_size
+
         bt = self.backbone_table()
         bt = bt[bt["exp_id"].isin([e for e, _ in BACKBONES])].sort_values("val_macro_f1", ascending=False)
         top3 = bt["exp_id"].tolist()[:3]
-        ens_models = []
-        for e in top3:
-            m_, _, _ = TR.load_trained(TR.load_config(e, 0, str(self.out / "runs")), dev)
-            ens_models.append(m_)
-        l_e3 = multi_model_latency(ens_models, S, "fp32", dname, iters=iters, label=f"I05a ensemble {top3}")
-        lat_rows.append(l_e3)
-        add("I05a", "Ensemble 3 backbone tốt nhất (B)", INF.ensemble_probs([val_probs(e) for e in top3]), 3, l_e3,
-            model_desc="+".join(top3), note="trung bình xác suất; val logit lưu lúc train (AMP)")
-        del ens_models
+        with guard("I05a"):
+            loaded = [load_exp(e) for e in top3]
+            l_e3 = multi_model_latency([m_ for m_, _ in loaded], [sz for _, sz in loaded], "fp32", dname,
+                                       iters=iters, label=f"I05a ensemble {top3}")
+            lat_rows.append(l_e3)
+            add("I05a", "Ensemble 3 backbone tốt nhất (B)", INF.ensemble_probs([val_probs(e) for e in top3]), 3,
+                l_e3, model_desc="+".join(top3), note="trung bình xác suất; val logit lưu lúc train (AMP)")
+            del loaded
         allb = bt["exp_id"].tolist()
-        add("I05b", f"Ensemble {len(allb)} backbone", INF.ensemble_probs([val_probs(e) for e in allb]), len(allb),
-            model_desc="+".join(allb), note="độ trễ ≈ tổng độ trễ từng model (không đo riêng)")
-        t00_models = [TR.load_trained(TR.load_config("T00", s, str(self.out / "runs")), dev)[0] for s in SEEDS_FINAL]
-        l_es = multi_model_latency(t00_models, S, "fp32", dname, iters=iters, label="I05c ensemble T00 x3 seed")
-        lat_rows.append(l_es)
-        add("I05c", "Ensemble 3 seed (T00)", INF.ensemble_probs([val_probs("T00", s) for s in SEEDS_FINAL]), 3, l_es,
-            model_desc="T00 seed0+1+2")
+        with guard("I05b"):
+            add("I05b", f"Ensemble {len(allb)} backbone", INF.ensemble_probs([val_probs(e) for e in allb]),
+                len(allb), model_desc="+".join(allb), note="độ trễ ≈ tổng độ trễ từng model (không đo riêng)")
+        t00_f1 = [self.summary("T00", s_)["val_macro_f1"] for s_ in SEEDS_FINAL]
+        with guard("I05c"):
+            loaded = [load_exp("T00", s_) for s_ in SEEDS_FINAL]
+            l_es = multi_model_latency([m_ for m_, _ in loaded], [sz for _, sz in loaded], "fp32", dname,
+                                       iters=iters, label="I05c ensemble T00 x3 seed")
+            lat_rows.append(l_es)
+            add("I05c", "Ensemble 3 seed (T00)", INF.ensemble_probs([val_probs("T00", s_) for s_ in SEEDS_FINAL]),
+                3, l_es, model_desc="T00 seed0+1+2",
+                note="so với từng seed T00 riêng lẻ: " + ", ".join(f"{v:.4f}" for v in t00_f1))
+            del loaded
         # EMA (I06a) và soup (I06b)
         t13 = self.summary("T13")
         if t13 and t13.get("best_ema_val_macro_f1") is not None:
@@ -547,14 +576,19 @@ class Lab:
                          "throughput_img_s": lat0_b32["images_per_s"], "rel_cost_vs_I00": 1.0,
                          "note": f"best raw val macro-F1 = {t13['best_raw_val_macro_f1']:.4f}; "
                                  f"best EMA = {t13['best_ema_val_macro_f1']:.4f}; không tốn thêm lúc suy luận"})
-        soup = copy.deepcopy(t00_models[0])
-        soup.load_state_dict(INF.model_soup([m.state_dict() for m in t00_models]))
-        std_loader = TR.build_eval_loader(cfg, val_df, mean, std, img_size=S, batch_size=128)
-        _, ys, ls = INF.predict_logits(soup, std_loader, dev)
-        assert (ys == y).all()
-        add("I06b", "Model soup đều 3 seed (T00)", _softmax(ls), 1, lat0, model_desc="soup(T00 seed0,1,2)",
-            note="trung bình trọng số; head mỗi seed khởi tạo khác nhau", thr=lat0_b32["images_per_s"])
-        del t00_models, soup
+        with guard("I06b"):
+            tcfgs = [TR.load_config("T00", s_, str(self.out / "runs")) for s_ in SEEDS_FINAL]
+            tm = [TR.load_trained(c_, dev) for c_ in tcfgs]
+            soup = copy.deepcopy(tm[0][0])
+            soup.load_state_dict(INF.model_soup([m_.state_dict() for m_, _, _ in tm]))
+            t00_loader = TR.build_eval_loader(tcfgs[0], val_df, tm[0][1], tm[0][2], batch_size=128)
+            _, ys, ls = INF.predict_logits(soup, t00_loader, dev)
+            assert (ys == y).all()
+            add("I06b", "Model soup đều 3 seed (T00)", _softmax(ls), 1, lat0, model_desc="soup(T00 seed0,1,2)",
+                note="trung bình trọng số, đánh giá ở 224 như T00; từng seed T00: "
+                     + ", ".join(f"{v:.4f}" for v in t00_f1) + "; head mỗi seed khởi tạo khác nhau",
+                thr=lat0_b32["images_per_s"])
+            del tm, soup
         # Temperature scaling (I07): khớp trên val; báo cả ECE in-sample và ECE chéo 2 nửa val
         def ts_eval(logits):
             T = INF.fit_temperature(logits, y)
@@ -571,38 +605,37 @@ class Lab:
             f"T = {T0:.3f}; ECE trước {_metrics(y, P(['center']))['ece']:.4f}; ECE chéo 2 nửa val {ece_cv:.4f}"),
             thr=lat0_b32["images_per_s"])
         # FP16 / AMP / gộp BN (I08)
+        std_loader = TR.build_eval_loader(cfg, val_df, mean, std, img_size=S, batch_size=128)
         for eid, dt in (("I08a", "amp"), ("I08b", "fp16")):
-            mm = copy.deepcopy(model)
-            if dt == "fp16":
-                mm = mm.half()
-            _, _, l_ = INF.predict_logits(mm, std_loader, dev, amp=dt == "amp", half=dt == "fp16")
-            lt = latency_report(model, 1, S, dt, dname, iters=iters, label=f"{eid} {dt} b1")
-            lt32 = latency_report(model, 32, S, dt, dname, iters=max(50, iters // 2), label=f"{eid} {dt} b32")
-            lat_rows += [lt, lt32]
-            flips = int((l_.argmax(1) != bank["center"].argmax(1)).sum())
-            add(eid, f"1 view {dt.upper()}", _softmax(l_), 1, lt, thr=lt32["images_per_s"],
-                note=f"{flips} ảnh val đổi nhãn so với FP32")
-            del mm
-        bn_model, bn_desc = (model, ckpt) if has_batchnorm(model) else (None, None)
-        if bn_model is None:  # ConvNeXt/ViT/Swin không có BN: minh hoạ trên B01 (ResNet-50)
-            try:
+            with guard(eid):
+                mm = copy.deepcopy(model)
+                if dt == "fp16":
+                    mm = mm.half()
+                _, _, l_ = INF.predict_logits(mm, std_loader, dev, amp=dt == "amp", half=dt == "fp16")
+                lt = latency_report(model, 1, S, dt, dname, iters=iters, label=f"{eid} {dt} b1")
+                lt32 = latency_report(model, 32, S, dt, dname, iters=max(50, iters // 2), label=f"{eid} {dt} b32")
+                lat_rows += [lt, lt32]
+                flips = int((l_.argmax(1) != bank["center"].argmax(1)).sum())
+                add(eid, f"1 view {dt.upper()}", _softmax(l_), 1, lt, thr=lt32["images_per_s"],
+                    note=f"{flips} ảnh val đổi nhãn so với FP32")
+                del mm
+        with guard("I08c"):
+            bcfg = bn_model = bmean = bstd = None
+            if has_batchnorm(model):
+                bn_model, bcfg, bmean, bstd, bn_desc = model, cfg, mean, std, ckpt
+            else:  # ConvNeXt/ViT/Swin không có BN: minh hoạ gộp BN trên B01 (ResNet-50)
                 bcfg = TR.load_config("B01", 0, str(self.out / "runs"))
                 bn_model, bmean, bstd = TR.load_trained(bcfg, dev)
                 bn_desc = "B01_seed0 (resnet50; model chính không có BN)"
-            except FileNotFoundError:
-                bn_model = None
-        if bn_model is not None:
-            fused = INF.fuse_conv_bn(bn_model, img_size=S)
-            if bn_model is model:
-                ref_logits = bank["center"]
-                _, _, lf = INF.predict_logits(fused, std_loader, dev)
-            else:
-                bl = TR.build_eval_loader(bcfg, val_df, bmean, bstd, img_size=S, batch_size=128)
-                _, _, ref_logits = INF.predict_logits(bn_model, bl, dev)
-                _, _, lf = INF.predict_logits(fused, bl, dev)
-            lu = latency_report(bn_model, 1, S, "fp32", dname, iters=iters, label="I08c chưa gộp BN fp32 b1")
-            lfz = latency_report(fused, 1, S, "fp32", dname, iters=iters, bn_fused=True, label="I08c gộp BN fp32 b1")
-            lfz16 = latency_report(fused, 1, S, "fp16", dname, iters=iters, bn_fused=True, label="I08c gộp BN fp16 b1")
+            BS = bcfg.img_size
+            fused = INF.fuse_conv_bn(bn_model, img_size=BS)
+            bl = TR.build_eval_loader(bcfg, val_df, bmean, bstd, batch_size=128)
+            _, _, ref_logits = INF.predict_logits(bn_model, bl, dev)
+            _, _, lf = INF.predict_logits(fused, bl, dev)
+            lu = latency_report(bn_model, 1, BS, "fp32", dname, iters=iters, label="I08c chưa gộp BN fp32 b1")
+            lfz = latency_report(fused, 1, BS, "fp32", dname, iters=iters, bn_fused=True, label="I08c gộp BN fp32 b1")
+            lfz16 = latency_report(fused, 1, BS, "fp16", dname, iters=iters, bn_fused=True,
+                                   label="I08c gộp BN fp16 b1")
             lat_rows += [lu, lfz, lfz16]
             add("I08c", "Gộp BN vào conv (FP32)", _softmax(lf), 1, lfz, model_desc=bn_desc, note=(
                 f"{fused.fuse_info['n_fused']} cặp conv-BN; sai số logit lớn nhất {np.abs(lf - ref_logits).max():.2e}; "
@@ -613,20 +646,23 @@ class Lab:
         for e, _ in BACKBONES + [(b[0], b[1]) for b in BONUS_BACKBONES]:
             if self.summary(e) is None:
                 continue
-            bc = TR.load_config(e, 0, str(self.out / "runs"))
-            bm, _, _ = TR.load_trained(bc, dev)
-            for dt in ("fp32", "amp", "fp16"):
-                for bs in (1, 32):
-                    lat_rows.append(latency_report(bm, bs, bc.img_size, dt, dname,
-                                                   iters=iters if bs == 1 else max(50, iters // 2),
-                                                   label=f"{e} {bc.backbone}"))
-            del bm
+            with guard(f"latency_{e}"):
+                bc = TR.load_config(e, 0, str(self.out / "runs"))
+                bm, _, _ = TR.load_trained(bc, dev)
+                for dt in ("fp32", "amp", "fp16"):
+                    for bs in (1, 32):
+                        lat_rows.append(latency_report(bm, bs, bc.img_size, dt, dname,
+                                                       iters=iters if bs == 1 else max(50, iters // 2),
+                                                       label=f"{e} {bc.backbone}"))
+                del bm
             torch.cuda.empty_cache()
         df = pd.DataFrame(rows)
         df.to_csv(out_csv, index=False)
         pd.DataFrame(lat_rows).to_csv(self.out / "inference" / "latency.csv", index=False)
         _json(self.out / "inference" / "notes.json", {"view_notes": notes, "recipe_cfg": dataclasses.asdict(cfg),
-                                                      "T_I00": T0})
+                                                      "T_I00": T0, "failures": failures})
+        if failures:
+            print("!!! Các thí nghiệm phụ bị lỗi (xem notes.json):", failures)
         # TTA đổi nhãn: đúng -> sai và sai -> đúng (slide trang 66)
         base_pred = bank["center"].argmax(1)
         flips = {}

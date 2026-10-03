@@ -116,22 +116,28 @@ def tta_latency(model, k_views: int = 2, views_fn=None, img_size: int = 224, inp
             "images_per_s": 1.0 / (r["p50"] / 1000.0)}
 
 
-def multi_model_latency(models, img_size: int = 224, dtype: str = "fp32", device: str = "cuda",
+def multi_model_latency(models, img_size=224, dtype: str = "fp32", device: str = "cuda",
                         warmup: int = 10, iters: int = 100, label: str = "") -> dict:
-    """Độ trễ ensemble ở batch 1: chạy lần lượt mọi model trên cùng ảnh rồi trung bình xác suất."""
+    """Độ trễ ensemble ở batch 1: chạy lần lượt mọi model trên cùng ảnh rồi trung bình xác suất.
+
+    `img_size` là một số (mọi model cùng kích thước) hoặc list độ dài len(models): mỗi model chạy ở đúng
+    kích thước nó được huấn luyện (ví dụ Swin-T cố định 224, ConvNeXt công thức T15 dùng 256).
+    """
     import torch
 
+    sizes = [img_size] * len(models) if isinstance(img_size, int) else list(img_size)
+    assert len(sizes) == len(models)
     prepared = [_prepare(m, dtype, device)[0] for m in models]
     in_dtype = torch.float16 if dtype == "fp16" else torch.float32
-    x = torch.randn(1, 3, img_size, img_size, device=device, dtype=in_dtype)
+    xs = [torch.randn(1, 3, s, s, device=device, dtype=in_dtype) for s in sizes]
     sync = torch.cuda.synchronize if device.startswith("cuda") else None
 
     def fn():
         with torch.inference_mode(), torch.autocast("cuda", dtype=torch.float16, enabled=dtype == "amp"):
-            return torch.stack([m(x).float().softmax(-1) for m in prepared]).mean(0)
+            return torch.stack([m(x).float().softmax(-1) for m, x in zip(prepared, xs)]).mean(0)
 
     r = bench(fn, warmup=warmup, iters=iters, sync=sync)
-    return {"config": label, **_env(device), "dtype": dtype, "batch": 1, "img_size": img_size,
+    return {"config": label, **_env(device), "dtype": dtype, "batch": 1, "img_size": "/".join(map(str, sizes)),
             "k_models": len(models), "bn_fused": False, "includes_preprocessing": False,
             **{k: r[k] for k in ("p50", "p95", "p99", "mean", "std", "n", "warmup")},
             "images_per_s": 1.0 / (r["p50"] / 1000.0)}
