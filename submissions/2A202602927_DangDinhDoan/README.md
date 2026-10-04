@@ -10,7 +10,7 @@
 
 ## Notebook chạy lại được
 
-- Kaggle: _(điền link notebook Kaggle sau khi chạy)_
+- Kaggle (đã chạy, có output): https://www.kaggle.com/code/ngan1234/computer-vision
 - File: [`code/lab_day2.ipynb`](code/lab_day2.ipynb), tự `git clone` repo này, tải dữ liệu, chạy Bước 0 → 5.
 - Notebook đã chạy trên Kaggle (có output, gồm cả đoạn lỗi Bước 5): [`code/lab_day2_kaggle_run.ipynb`](code/lab_day2_kaggle_run.ipynb).
 

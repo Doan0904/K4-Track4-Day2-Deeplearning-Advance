@@ -208,4 +208,4 @@ Recall đều vượt mốc 88,5 % và 88,8 % của bài báo (trích dẫn; cù
 | Suy luận | I00–I08 | (model T15 seed 0) | – | `inference/inference.csv`, `val_view_bank.npz` |
 | Chung kết | F01 | 0, 1, 2 | `curves/F01_final.png` | `predictions/F01_seed*_{val,test}.csv`, `F01_uncal_*`, `F02_*` |
 
-Cấu hình đầy đủ từng lần chạy: `logs/<exp_id>/seed<k>/config.json` (có tag trọng số timm, version thư viện, GPU); log theo epoch: `history.csv`; LR theo bước: `lr_trace.csv`. Quyết định tự động và số liệu căn cứ: `decisions.json`. Notebook chạy lại: `code/lab_day2.ipynb` (xem `README.md`). Link notebook Kaggle: _(điền)_.
+Cấu hình đầy đủ từng lần chạy: `logs/<exp_id>/seed<k>/config.json` (có tag trọng số timm, version thư viện, GPU); log theo epoch: `history.csv`; LR theo bước: `lr_trace.csv`. Quyết định tự động và số liệu căn cứ: `decisions.json`. Notebook chạy lại: `code/lab_day2.ipynb` (xem `README.md`). Link notebook Kaggle: https://www.kaggle.com/code/ngan1234/computer-vision
