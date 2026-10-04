@@ -1,6 +1,6 @@
 # Báo cáo Lab Day 2 — Backbone, công thức huấn luyện và suy luận trên DeepWeeds
 
-**Sinh viên:** Đặng Đình Đoàn — 2A202602927 · **Phần cứng:** Kaggle, 2 × Tesla T4 · **Phần mềm:** Python 3.13, torch 2.11.0+cu128, torchvision 0.26.0, timm 1.0.29, CUDA 12.8
+**Sinh viên:** Đặng Đỉnh Đoàn — 2A202602927 · **Phần cứng:** Kaggle, 2 × Tesla T4 · **Phần mềm:** Python 3.13, torch 2.11.0+cu128, torchvision 0.26.0, timm 1.0.29, CUDA 12.8
 
 Mọi con số dưới đây lấy từ log của lần chạy thật (`logs/<exp_id>/seed<k>/`), từ `results.xlsx`, hoặc tính lại bằng `eval.py` trên `predictions/`. Số trích từ bài báo gốc được ghi rõ là *trích dẫn*.
 

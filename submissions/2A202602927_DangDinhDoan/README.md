@@ -1,6 +1,6 @@
 # Lab Day 2 — DeepWeeds: backbone, công thức huấn luyện, suy luận
 
-**Sinh viên:** Đặng Đình Đoàn — MSSV 2A202602927
+**Sinh viên:** Đặng Đỉnh Đoàn — MSSV 2A202602927
 
 > **Trạng thái:** đã chạy xong trên Kaggle (2 × Tesla T4, khoảng 3,7 giờ). Báo cáo: [`report.md`](report.md); bảng so sánh:
 > [`results.xlsx`](results.xlsx). Kết quả chính: `F01` macro-F1 test **0,9693 ± 0,0011**, top-1 **97,55 ± 0,10 %** (3 seed),
