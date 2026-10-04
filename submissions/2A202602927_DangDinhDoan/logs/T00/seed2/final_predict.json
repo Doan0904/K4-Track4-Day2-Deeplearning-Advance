@@ -1,0 +1,8 @@
+{
+  "exp_id": "T00",
+  "seed": 2,
+  "inference": "I00",
+  "space": "prob",
+  "T": 1.0,
+  "T_realtime": 1.0
+}

@@ -1,0 +1,10 @@
+,pred_Chinee apple,pred_Lantana,pred_Parkinsonia,pred_Parthenium,pred_Prickly acacia,pred_Rubber vine,pred_Siam weed,pred_Snake weed,pred_Negative
+true_Chinee apple,634,0,0,0,0,0,0,16,28
+true_Lantana,2,618,0,0,0,0,2,8,9
+true_Parkinsonia,3,0,616,2,0,0,0,0,0
+true_Parthenium,8,0,4,590,12,0,0,0,1
+true_Prickly acacia,0,0,10,5,613,0,0,0,11
+true_Rubber vine,1,0,0,0,0,579,0,0,26
+true_Siam weed,0,0,0,0,0,1,636,1,7
+true_Snake weed,7,3,0,0,0,2,0,577,23
+true_Negative,11,12,5,1,19,19,8,5,5386

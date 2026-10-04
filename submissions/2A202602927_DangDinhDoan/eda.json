@@ -1,0 +1,103 @@
+{
+  "n": {
+    "train": 10501,
+    "val": 3501,
+    "test": 3507
+  },
+  "total": 17509,
+  "fraction": {
+    "train": 0.5997,
+    "val": 0.2,
+    "test": 0.2003
+  },
+  "overlap": {
+    "train&val": 0,
+    "train&test": 0,
+    "val&test": 0
+  },
+  "union": 17509,
+  "missing_files": 0,
+  "images_on_disk": 17509,
+  "label_mismatch_vs_labels_csv": [
+    {
+      "split": "train",
+      "Filename": "20170714-110407-3.jpg",
+      "subset_label": 0,
+      "labels_csv_label": 1
+    }
+  ],
+  "per_class": {
+    "train": {
+      "Chinee Apple": 675,
+      "Lantana": 637,
+      "Parkinsonia": 618,
+      "Parthenium": 613,
+      "Prickly Acacia": 637,
+      "Rubber Vine": 605,
+      "Siam Weed": 644,
+      "Snake Weed": 609,
+      "Negatives": 5463
+    },
+    "val": {
+      "Chinee Apple": 225,
+      "Lantana": 213,
+      "Parkinsonia": 206,
+      "Parthenium": 204,
+      "Prickly Acacia": 212,
+      "Rubber Vine": 202,
+      "Siam Weed": 215,
+      "Snake Weed": 203,
+      "Negatives": 1821
+    },
+    "test": {
+      "Chinee Apple": 226,
+      "Lantana": 213,
+      "Parkinsonia": 207,
+      "Parthenium": 205,
+      "Prickly Acacia": 213,
+      "Rubber Vine": 202,
+      "Siam Weed": 215,
+      "Snake Weed": 204,
+      "Negatives": 1822
+    },
+    "all": {
+      "Chinee Apple": 1126,
+      "Lantana": 1063,
+      "Parkinsonia": 1031,
+      "Parthenium": 1022,
+      "Prickly Acacia": 1062,
+      "Rubber Vine": 1009,
+      "Siam Weed": 1074,
+      "Snake Weed": 1016,
+      "Negatives": 9106
+    }
+  },
+  "max_min_ratio": 9.024777006937562,
+  "max_min_ratio_train": 9.029752066115703,
+  "image_sizes": {
+    "256x256": 17509
+  },
+  "image_modes": {
+    "RGB": 17509
+  },
+  "train_channel_mean": [
+    0.3785,
+    0.3885,
+    0.3786
+  ],
+  "train_channel_std": [
+    0.2367,
+    0.2351,
+    0.2328
+  ],
+  "imagenet_mean": [
+    0.485,
+    0.456,
+    0.406
+  ],
+  "imagenet_std": [
+    0.229,
+    0.224,
+    0.225
+  ]
+}

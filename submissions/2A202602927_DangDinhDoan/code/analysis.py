@@ -259,7 +259,8 @@ def robustness(lab, exp_id: str = "F01", seed: int = 0) -> pd.DataFrame:
     if path.exists():
         return pd.read_csv(path)
     dev = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    cfg = TR.load_config(exp_id, seed, str(lab.out / "runs"))
+    cfg = TR.load_config(exp_id, seed, str(lab.out / "runs"), images_dir=lab.images_dir,
+                         labels_dir=lab.labels_dir, cache_path=lab.cache_path)
     model, mean, std = TR.load_trained(cfg, dev)
     _, va, _ = D.load_split(cfg.labels_dir, 0)
     if cfg.eval_limit:
@@ -380,10 +381,11 @@ def error_analysis(lab, exp_id: str = "F01", seed: int = 0, n_show: int = 12) ->
     info["n_chinee_snake_confusions_seed0"] = int(len(hard))
     if len(pick):
         dev = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        cfg = TR.load_config(exp_id, seed, str(lab.out / "runs"))
+        cfg = TR.load_config(exp_id, seed, str(lab.out / "runs"), images_dir=lab.images_dir,
+                         labels_dir=lab.labels_dir, cache_path=lab.cache_path)
         model, mean, std = TR.load_trained(cfg, dev)
         tf = D.build_transforms(False, cfg.img_size, mean=mean, std=std)
-        ds = D.DeepWeedsDataset(pick, lab.images_dir, tf, lab.cache_path)
+        ds = D.DeepWeedsDataset(pick.assign(Label=pick["y_true"]), lab.images_dir, tf, lab.cache_path)
         x = torch.stack([ds[i][0] for i in range(len(ds))]).to(dev)
         try:
             cam_pred, _ = _gradcam(model, x, torch.tensor(pick["y_pred"].to_numpy(), device=dev))
@@ -469,6 +471,7 @@ def make_plots(lab) -> None:
         ax.set(ylabel="Δ macro-F1 val so với mean T00", title=f"Ablation công thức huấn luyện (1 seed mỗi dòng); "
                                                               f"T00 = {st['mean']:.4f} ± {st['std']:.4f}")
         ax.tick_params(axis="x", labelsize=7)
+        plt.setp(ax.get_xticklabels(), rotation=35, ha="right")
         ax.legend()
         ax.grid(alpha=.3, axis="y")
         fig.tight_layout()

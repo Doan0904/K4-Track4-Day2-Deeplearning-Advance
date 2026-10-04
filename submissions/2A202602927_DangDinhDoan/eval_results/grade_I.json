@@ -1,0 +1,49 @@
+{
+  "items": [
+    {
+      "code": "I1",
+      "criterion": "Top-1 accuracy test",
+      "points": 7,
+      "max": 7,
+      "note": "97.55% (mean 3 seed)"
+    },
+    {
+      "code": "I2",
+      "criterion": "Macro-F1 cải thiện so với mốc",
+      "points": 5,
+      "max": 5,
+      "note": "final 0.9693, mốc 0.9507, Δ=+0.0186, s=0.0040"
+    },
+    {
+      "code": "I3",
+      "criterion": "Recall hai lớp khó",
+      "points": 4,
+      "max": 4,
+      "note": "Chinee Apple 93.5% (mốc 88.5%), Snake Weed 93.5% (mốc 88.8%)"
+    },
+    {
+      "code": "I4a",
+      "criterion": "ECE sau TS < ECE trước",
+      "points": 1,
+      "max": 1,
+      "note": "trước 0.0927, sau 0.0054"
+    },
+    {
+      "code": "I4b",
+      "criterion": "Chênh macro-F1 val/test <= 0.02",
+      "points": 1,
+      "max": 1,
+      "note": "val 0.9689, test 0.9693, chênh 0.0004"
+    },
+    {
+      "code": "I5",
+      "criterion": "Cấu hình thời gian thực",
+      "points": 2,
+      "max": 2,
+      "note": "p95 = 6.7 ms (ngân sách 100 ms), đo đúng cách"
+    }
+  ],
+  "total": 20,
+  "max_scored": 20,
+  "warnings": []
+}

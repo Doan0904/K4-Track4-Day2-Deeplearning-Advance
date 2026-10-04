@@ -1,0 +1,57 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[B05 seed0] ep 01/12 loss 1.0067 | val loss 0.3619 F1 0.8530 top1 0.8823 | 59s+9s
+[B05 seed0] ep 02/12 loss 0.3698 | val loss 0.3134 F1 0.8668 top1 0.8986 | 60s+8s
+[B05 seed0] ep 03/12 loss 0.2728 | val loss 0.2812 F1 0.8805 top1 0.9060 | 63s+8s
+[B05 seed0] ep 04/12 loss 0.2121 | val loss 0.2442 F1 0.8885 top1 0.9192 | 63s+8s
+[B05 seed0] ep 05/12 loss 0.1765 | val loss 0.1577 F1 0.9317 top1 0.9503 | 63s+8s
+[B05 seed0] ep 06/12 loss 0.1427 | val loss 0.1963 F1 0.9151 top1 0.9377 | 62s+8s
+[B05 seed0] ep 07/12 loss 0.1224 | val loss 0.1414 F1 0.9441 top1 0.9583 | 63s+8s
+[B05 seed0] ep 08/12 loss 0.0975 | val loss 0.1994 F1 0.9234 top1 0.9369 | 62s+8s
+[B05 seed0] ep 09/12 loss 0.0860 | val loss 0.1393 F1 0.9434 top1 0.9586 | 62s+8s
+[B05 seed0] ep 10/12 loss 0.0721 | val loss 0.1255 F1 0.9523 top1 0.9646 | 62s+8s
+[B05 seed0] ep 11/12 loss 0.0592 | val loss 0.1170 F1 0.9565 top1 0.9694 | 63s+8s
+[B05 seed0] ep 12/12 loss 0.0566 | val loss 0.1157 F1 0.9580 top1 0.9700 | 63s+8s
+[B05 seed0] XONG: best epoch 12, val macro-F1 0.9580, top1 0.9700, 62s/epoch
+/tmp/lab_repo/submissions/2A202602927_DangDinhDoan/code/train.py:261: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  scheduler.step()
+[B04 seed0] ep 01/12 loss 0.9130 | val loss 0.3272 F1 0.8597 top1 0.8940 | 34s+4s
+[B04 seed0] ep 02/12 loss 0.3504 | val loss 0.4168 F1 0.8221 top1 0.8698 | 33s+4s
+[B04 seed0] ep 03/12 loss 0.2555 | val loss 0.2944 F1 0.8636 top1 0.9035 | 33s+4s
+[B04 seed0] ep 04/12 loss 0.2114 | val loss 0.1802 F1 0.9192 top1 0.9437 | 33s+4s
+[B04 seed0] ep 05/12 loss 0.1757 | val loss 0.2158 F1 0.9022 top1 0.9272 | 33s+4s
+[B04 seed0] ep 06/12 loss 0.1336 | val loss 0.1845 F1 0.9207 top1 0.9394 | 33s+4s
+[B04 seed0] ep 07/12 loss 0.1095 | val loss 0.1471 F1 0.9346 top1 0.9529 | 33s+4s
+[B04 seed0] ep 08/12 loss 0.0879 | val loss 0.1396 F1 0.9396 top1 0.9569 | 33s+4s
+[B04 seed0] ep 09/12 loss 0.0736 | val loss 0.1297 F1 0.9453 top1 0.9603 | 33s+4s
+[B04 seed0] ep 10/12 loss 0.0592 | val loss 0.1272 F1 0.9462 top1 0.9617 | 32s+4s
+[B04 seed0] ep 11/12 loss 0.0557 | val loss 0.1223 F1 0.9471 top1 0.9629 | 32s+4s
+[B04 seed0] ep 12/12 loss 0.0470 | val loss 0.1211 F1 0.9476 top1 0.9632 | 32s+4s
+[B04 seed0] XONG: best epoch 12, val macro-F1 0.9476, top1 0.9632, 33s/epoch
+/tmp/lab_repo/submissions/2A202602927_DangDinhDoan/code/train.py:261: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  scheduler.step()
+[B08 seed0] ep 01/12 loss 1.1781 | val loss 0.5608 F1 0.7744 top1 0.8215 | 17s+6s
+[B08 seed0] ep 02/12 loss 0.4887 | val loss 0.4274 F1 0.8252 top1 0.8612 | 17s+5s
+[B08 seed0] ep 03/12 loss 0.4179 | val loss 0.3772 F1 0.8496 top1 0.8800 | 17s+5s
+[B08 seed0] ep 04/12 loss 0.3769 | val loss 0.3613 F1 0.8553 top1 0.8835 | 17s+5s
+[B08 seed0] ep 05/12 loss 0.3560 | val loss 0.3470 F1 0.8551 top1 0.8860 | 17s+5s
+[B08 seed0] ep 06/12 loss 0.3486 | val loss 0.3313 F1 0.8665 top1 0.8920 | 18s+5s
+[B08 seed0] ep 07/12 loss 0.3221 | val loss 0.3189 F1 0.8703 top1 0.8932 | 17s+5s
+[B08 seed0] ep 08/12 loss 0.3207 | val loss 0.3172 F1 0.8718 top1 0.8943 | 17s+5s
+[B08 seed0] ep 09/12 loss 0.3168 | val loss 0.3169 F1 0.8642 top1 0.8897 | 17s+5s
+[B08 seed0] ep 10/12 loss 0.3169 | val loss 0.3100 F1 0.8725 top1 0.8963 | 18s+5s
+[B08 seed0] ep 11/12 loss 0.3166 | val loss 0.3104 F1 0.8734 top1 0.8972 | 18s+5s
+[B08 seed0] ep 12/12 loss 0.3021 | val loss 0.3099 F1 0.8731 top1 0.8969 | 17s+5s
+[B08 seed0] XONG: best epoch 11, val macro-F1 0.8734, top1 0.8972, 17s/epoch
+[B06 seed0] ep 01/12 loss 2.1577 | val loss 1.4651 F1 0.4035 top1 0.5316 | 90s+37s
+[B06 seed0] ep 02/12 loss 0.8170 | val loss 1.0321 F1 0.5433 top1 0.6561 | 25s+4s
+[B06 seed0] ep 03/12 loss 0.5652 | val loss 0.8725 F1 0.6229 top1 0.7315 | 25s+4s
+[B06 seed0] ep 04/12 loss 0.4408 | val loss 0.7596 F1 0.6658 top1 0.7515 | 26s+3s
+[B06 seed0] ep 05/12 loss 0.3832 | val loss 0.7903 F1 0.6609 top1 0.7615 | 24s+3s
+[B06 seed0] ep 06/12 loss 0.3199 | val loss 0.6283 F1 0.7273 top1 0.8055 | 26s+5s
+[B06 seed0] ep 07/12 loss 0.2831 | val loss 0.5940 F1 0.7406 top1 0.8135 | 26s+3s
+[B06 seed0] ep 08/12 loss 0.2653 | val loss 0.6200 F1 0.7223 top1 0.7963 | 27s+4s
+[B06 seed0] ep 09/12 loss 0.2400 | val loss 0.6005 F1 0.7326 top1 0.8038 | 29s+5s
+[B06 seed0] ep 10/12 loss 0.2340 | val loss 0.5938 F1 0.7353 top1 0.8081 | 29s+5s
+[B06 seed0] ep 11/12 loss 0.2228 | val loss 0.5806 F1 0.7404 top1 0.8089 | 29s+5s
+[B06 seed0] ep 12/12 loss 0.2123 | val loss 0.5604 F1 0.7514 top1 0.8181 | 29s+5s
+[B06 seed0] XONG: best epoch 12, val macro-F1 0.7514, top1 0.8181, 32s/epoch

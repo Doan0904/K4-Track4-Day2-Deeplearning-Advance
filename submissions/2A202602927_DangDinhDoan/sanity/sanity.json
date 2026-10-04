@@ -1,0 +1,9 @@
+{
+  "backbone": "resnet50.a1_in1k",
+  "expected_initial_loss": 2.1972245773362196,
+  "initial_loss": 2.185052812099457,
+  "initial_pred_entropy": 2.1950087547302246,
+  "focal_gamma0_minus_ce": 0.0,
+  "overfit_final_loss": 0.0013494612649083138,
+  "overfit_ok": true
+}

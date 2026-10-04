@@ -430,10 +430,18 @@ def load_trained(cfg: Config, device=None, kind: str = "best"):
     return model, tuple(conf["weights"]["mean"]), tuple(conf["weights"]["std"])
 
 
-def load_config(exp_id: str, seed: int, out_dir: str) -> Config:
+def load_config(exp_id: str, seed: int, out_dir: str, **overrides) -> Config:
+    """Đọc lại Config của một lần chạy. Đường dẫn out/ckpt/pred/curves được đặt lại theo `out_dir`
+    (<root>/runs), nên đọc được cả khi thư mục kết quả đã chuyển máy (Kaggle -> local).
+    images_dir, labels_dir, cache_path giữ giá trị đã lưu trừ khi truyền qua `overrides`."""
     conf = json.loads((Path(out_dir) / exp_id / f"seed{seed}" / "config.json").read_text())
     fields = {f.name for f in dataclasses.fields(Config)}
-    return Config(**{k: v for k, v in conf["config"].items() if k in fields})
+    c = {k: v for k, v in conf["config"].items() if k in fields}
+    root = Path(out_dir).parent
+    c.update(out_dir=str(out_dir), ckpt_dir=str(root / "ckpt"), pred_dir=str(root / "predictions"),
+             curves_dir=str(root / "curves"))
+    c.update(overrides)
+    return Config(**c)
 
 
 def run(cfg: Config) -> dict:

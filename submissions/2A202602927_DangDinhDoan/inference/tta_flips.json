@@ -1,0 +1,12 @@
+{
+  "I01": {
+    "right_to_wrong": 7,
+    "wrong_to_right": 6,
+    "changed": 14
+  },
+  "I02b": {
+    "right_to_wrong": 10,
+    "wrong_to_right": 21,
+    "changed": 33
+  }
+}

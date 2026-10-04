@@ -1,0 +1,27 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[F01 seed0] ep 01/12 loss 1.4160 | val loss 0.5097 F1 0.8013 top1 0.8509 | 89s+36s
+[F01 seed0] ep 02/12 loss 0.7990 | val loss 0.3272 F1 0.8960 top1 0.9252 | 59s+10s
+[F01 seed0] ep 03/12 loss 0.6855 | val loss 0.2629 F1 0.9179 top1 0.9403 | 61s+9s
+[F01 seed0] ep 04/12 loss 0.6362 | val loss 0.2204 F1 0.9389 top1 0.9526 | 62s+9s
+[F01 seed0] ep 05/12 loss 0.6159 | val loss 0.2147 F1 0.9454 top1 0.9586 | 63s+9s
+[F01 seed0] ep 06/12 loss 0.5917 | val loss 0.1975 F1 0.9528 top1 0.9654 | 63s+9s
+[F01 seed0] ep 07/12 loss 0.5711 | val loss 0.1881 F1 0.9607 top1 0.9689 | 64s+10s
+[F01 seed0] ep 08/12 loss 0.5664 | val loss 0.1908 F1 0.9593 top1 0.9700 | 63s+9s
+[F01 seed0] ep 09/12 loss 0.5564 | val loss 0.1824 F1 0.9586 top1 0.9683 | 64s+9s
+[F01 seed0] ep 10/12 loss 0.5535 | val loss 0.1796 F1 0.9616 top1 0.9709 | 64s+9s
+[F01 seed0] ep 11/12 loss 0.5484 | val loss 0.1767 F1 0.9637 top1 0.9720 | 63s+9s
+[F01 seed0] ep 12/12 loss 0.5468 | val loss 0.1767 F1 0.9630 top1 0.9717 | 63s+9s
+[F01 seed0] XONG: best epoch 11, val macro-F1 0.9637, top1 0.9720, 65s/epoch
+[F01 seed2] ep 01/12 loss 1.3907 | val loss 0.5147 F1 0.8270 top1 0.8703 | 65s+8s
+[F01 seed2] ep 02/12 loss 0.7790 | val loss 0.2790 F1 0.9204 top1 0.9397 | 64s+8s
+[F01 seed2] ep 03/12 loss 0.6724 | val loss 0.2784 F1 0.9159 top1 0.9303 | 64s+8s
+[F01 seed2] ep 04/12 loss 0.6351 | val loss 0.2339 F1 0.9398 top1 0.9543 | 64s+8s
+[F01 seed2] ep 05/12 loss 0.6113 | val loss 0.2095 F1 0.9453 top1 0.9589 | 64s+8s
+[F01 seed2] ep 06/12 loss 0.5984 | val loss 0.1909 F1 0.9518 top1 0.9634 | 64s+8s
+[F01 seed2] ep 07/12 loss 0.5763 | val loss 0.1900 F1 0.9569 top1 0.9674 | 64s+8s
+[F01 seed2] ep 08/12 loss 0.5654 | val loss 0.1805 F1 0.9602 top1 0.9709 | 64s+8s
+[F01 seed2] ep 09/12 loss 0.5588 | val loss 0.1771 F1 0.9613 top1 0.9703 | 64s+8s
+[F01 seed2] ep 10/12 loss 0.5535 | val loss 0.1738 F1 0.9648 top1 0.9737 | 64s+8s
+[F01 seed2] ep 11/12 loss 0.5484 | val loss 0.1744 F1 0.9659 top1 0.9743 | 63s+8s
+[F01 seed2] ep 12/12 loss 0.5440 | val loss 0.1739 F1 0.9660 top1 0.9746 | 64s+8s
+[F01 seed2] XONG: best epoch 12, val macro-F1 0.9660, top1 0.9746, 64s/epoch

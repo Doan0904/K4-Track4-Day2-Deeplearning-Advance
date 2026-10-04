@@ -2,14 +2,17 @@
 
 **Sinh viên:** Đặng Đình Đoàn — MSSV 2A202602927
 
-> **Trạng thái:** code và notebook đã xong; **chưa có kết quả**. Toàn bộ huấn luyện chạy trên Kaggle.
-> Sau khi chạy, `results.xlsx`, `report.md`, `curves/`, `predictions/` sẽ được thêm vào thư mục này
-> (lấy từ `submission_export.zip` mà notebook tạo ra).
+> **Trạng thái:** đã chạy xong trên Kaggle (2 × Tesla T4, khoảng 3,7 giờ). Báo cáo: [`report.md`](report.md); bảng so sánh:
+> [`results.xlsx`](results.xlsx). Kết quả chính: `F01` macro-F1 test **0,9693 ± 0,0011**, top-1 **97,55 ± 0,10 %** (3 seed),
+> mốc `T00`+`I00` 0,9507 ± 0,0040; cấu hình thời gian thực `F02` p95 6,7 ms.
+> Bước 5 trên Kaggle lỗi ở phần ảnh sai (lỗi code, đã sửa); phần còn lại của Bước 5 chạy lại cục bộ trên CPU từ
+> output của Kaggle, không huấn luyện lại (chi tiết ở mục *Sự cố khi chạy* của báo cáo).
 
 ## Notebook chạy lại được
 
 - Kaggle: _(điền link notebook Kaggle sau khi chạy)_
 - File: [`code/lab_day2.ipynb`](code/lab_day2.ipynb), tự `git clone` repo này, tải dữ liệu, chạy Bước 0 → 5.
+- Notebook đã chạy trên Kaggle (có output, gồm cả đoạn lỗi Bước 5): [`code/lab_day2_kaggle_run.ipynb`](code/lab_day2_kaggle_run.ipynb).
 
 ## Cách chạy
 
@@ -87,7 +90,19 @@ inference/       bảng suy luận, độ trễ, lệch phân phối
 decisions.json   các lựa chọn tự động và số liệu căn cứ
 ```
 
-Checkpoint (`*.pt`) không commit; nằm trong output Kaggle (`outputs/ckpt/`).
+Checkpoint (`*.pt`, 2,8 GB) không commit; nằm trong output Kaggle (`outputs/ckpt/`).
+
+## Tái tạo số liệu từ `predictions/`
+
+```bash
+python eval.py score --pred "submissions/2A202602927_DangDinhDoan/predictions/F01_seed*_test.csv" \
+    --test-csv data/labels/test_subset0.csv --labels data/labels/labels.csv --tag F01
+python eval.py grade --final "submissions/2A202602927_DangDinhDoan/predictions/F01_seed*_test.csv" \
+    --baseline "submissions/2A202602927_DangDinhDoan/predictions/T00_seed*_test.csv" \
+    --uncal "submissions/2A202602927_DangDinhDoan/predictions/F01_uncal_seed*_test.csv" \
+    --final-val "submissions/2A202602927_DangDinhDoan/predictions/F01_seed*_val.csv" --val-csv data/labels/val_subset0.csv \
+    --latency-p95-ms 6.721 --test-csv data/labels/test_subset0.csv --labels data/labels/labels.csv
+```
 
 ## Ghi chú về dữ liệu
 

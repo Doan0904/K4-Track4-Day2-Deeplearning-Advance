@@ -1,0 +1,14 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[F01 seed1] ep 01/12 loss 1.3805 | val loss 0.5061 F1 0.8093 top1 0.8675 | 97s+37s
+[F01 seed1] ep 02/12 loss 0.7753 | val loss 0.2860 F1 0.9167 top1 0.9392 | 63s+10s
+[F01 seed1] ep 03/12 loss 0.6696 | val loss 0.2256 F1 0.9357 top1 0.9537 | 63s+10s
+[F01 seed1] ep 04/12 loss 0.6330 | val loss 0.2313 F1 0.9339 top1 0.9517 | 63s+9s
+[F01 seed1] ep 05/12 loss 0.6081 | val loss 0.2051 F1 0.9540 top1 0.9649 | 63s+9s
+[F01 seed1] ep 06/12 loss 0.5916 | val loss 0.1877 F1 0.9601 top1 0.9697 | 63s+10s
+[F01 seed1] ep 07/12 loss 0.5765 | val loss 0.1868 F1 0.9538 top1 0.9654 | 63s+9s
+[F01 seed1] ep 08/12 loss 0.5652 | val loss 0.1886 F1 0.9590 top1 0.9689 | 62s+10s
+[F01 seed1] ep 09/12 loss 0.5555 | val loss 0.1786 F1 0.9622 top1 0.9723 | 63s+9s
+[F01 seed1] ep 10/12 loss 0.5529 | val loss 0.1747 F1 0.9676 top1 0.9751 | 63s+9s
+[F01 seed1] ep 11/12 loss 0.5431 | val loss 0.1731 F1 0.9668 top1 0.9751 | 63s+9s
+[F01 seed1] ep 12/12 loss 0.5411 | val loss 0.1724 F1 0.9688 top1 0.9763 | 63s+11s
+[F01 seed1] XONG: best epoch 12, val macro-F1 0.9688, top1 0.9763, 66s/epoch

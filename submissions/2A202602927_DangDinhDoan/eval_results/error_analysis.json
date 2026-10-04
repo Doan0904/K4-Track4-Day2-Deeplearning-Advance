@@ -1,0 +1,22 @@
+{
+  "F01": {
+    "chinee_to_snake": 12,
+    "snake_to_chinee": 7,
+    "parkinsonia_to_prickly": 0,
+    "total_errors": 258
+  },
+  "T00": {
+    "chinee_to_snake": 26,
+    "snake_to_chinee": 12,
+    "parkinsonia_to_prickly": 3,
+    "total_errors": 404
+  },
+  "F02": {
+    "chinee_to_snake": 16,
+    "snake_to_chinee": 7,
+    "parkinsonia_to_prickly": 0,
+    "total_errors": 272
+  },
+  "n_wrong_seed0": 84,
+  "n_chinee_snake_confusions_seed0": 5
+}

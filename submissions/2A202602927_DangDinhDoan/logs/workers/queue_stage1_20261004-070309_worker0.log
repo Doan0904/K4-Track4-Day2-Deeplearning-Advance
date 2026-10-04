@@ -1,0 +1,55 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[B03 seed0] ep 01/12 loss 1.2446 | val loss 0.4727 F1 0.7922 top1 0.8518 | 77s+29s
+[B03 seed0] ep 02/12 loss 0.3857 | val loss 0.2987 F1 0.8701 top1 0.9060 | 49s+6s
+[B03 seed0] ep 03/12 loss 0.2421 | val loss 0.2096 F1 0.9112 top1 0.9343 | 48s+6s
+[B03 seed0] ep 04/12 loss 0.1952 | val loss 0.2059 F1 0.9099 top1 0.9349 | 48s+6s
+[B03 seed0] ep 05/12 loss 0.1579 | val loss 0.1465 F1 0.9382 top1 0.9532 | 48s+6s
+[B03 seed0] ep 06/12 loss 0.1306 | val loss 0.1569 F1 0.9332 top1 0.9514 | 48s+6s
+[B03 seed0] ep 07/12 loss 0.0983 | val loss 0.1188 F1 0.9519 top1 0.9649 | 48s+6s
+[B03 seed0] ep 08/12 loss 0.0867 | val loss 0.1147 F1 0.9526 top1 0.9654 | 48s+6s
+[B03 seed0] ep 09/12 loss 0.0750 | val loss 0.1123 F1 0.9521 top1 0.9654 | 48s+6s
+[B03 seed0] ep 10/12 loss 0.0707 | val loss 0.1116 F1 0.9557 top1 0.9666 | 48s+6s
+[B03 seed0] ep 11/12 loss 0.0649 | val loss 0.1125 F1 0.9530 top1 0.9652 | 48s+6s
+[B03 seed0] ep 12/12 loss 0.0574 | val loss 0.1125 F1 0.9532 top1 0.9652 | 48s+6s
+[B03 seed0] XONG: best epoch 10, val macro-F1 0.9557, top1 0.9666, 51s/epoch
+/tmp/lab_repo/submissions/2A202602927_DangDinhDoan/code/train.py:261: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  scheduler.step()
+[B02 seed0] ep 01/12 loss 1.6250 | val loss 1.5464 F1 0.1906 top1 0.4841 | 54s+10s
+[B02 seed0] ep 02/12 loss 0.7686 | val loss 1.1131 F1 0.4580 top1 0.5935 | 41s+5s
+[B02 seed0] ep 03/12 loss 0.5079 | val loss 0.7281 F1 0.6566 top1 0.7446 | 41s+5s
+[B02 seed0] ep 04/12 loss 0.3987 | val loss 0.7070 F1 0.6673 top1 0.7406 | 41s+5s
+[B02 seed0] ep 05/12 loss 0.3309 | val loss 0.5450 F1 0.7452 top1 0.8072 | 41s+5s
+[B02 seed0] ep 06/12 loss 0.2976 | val loss 0.5627 F1 0.7365 top1 0.7926 | 41s+5s
+[B02 seed0] ep 07/12 loss 0.2649 | val loss 0.5101 F1 0.7580 top1 0.8143 | 41s+5s
+[B02 seed0] ep 08/12 loss 0.2407 | val loss 0.5573 F1 0.7487 top1 0.7989 | 41s+5s
+[B02 seed0] ep 09/12 loss 0.2322 | val loss 0.5191 F1 0.7652 top1 0.8143 | 41s+6s
+[B02 seed0] ep 10/12 loss 0.2219 | val loss 0.5054 F1 0.7585 top1 0.8126 | 41s+5s
+[B02 seed0] ep 11/12 loss 0.2224 | val loss 0.5056 F1 0.7565 top1 0.8143 | 41s+5s
+[B02 seed0] ep 12/12 loss 0.2129 | val loss 0.5046 F1 0.7612 top1 0.8123 | 41s+5s
+[B02 seed0] XONG: best epoch 9, val macro-F1 0.7652, top1 0.8143, 42s/epoch
+[B01 seed0] ep 01/12 loss 1.6557 | val loss 1.2602 F1 0.1886 top1 0.5541 | 39s+6s
+[B01 seed0] ep 02/12 loss 0.9726 | val loss 0.7945 F1 0.5821 top1 0.7149 | 34s+5s
+[B01 seed0] ep 03/12 loss 0.6984 | val loss 0.6235 F1 0.6895 top1 0.7798 | 34s+4s
+[B01 seed0] ep 04/12 loss 0.5786 | val loss 0.5557 F1 0.7349 top1 0.8092 | 34s+5s
+[B01 seed0] ep 05/12 loss 0.4987 | val loss 0.5230 F1 0.7508 top1 0.8201 | 34s+5s
+[B01 seed0] ep 06/12 loss 0.4664 | val loss 0.4701 F1 0.7730 top1 0.8338 | 34s+5s
+[B01 seed0] ep 07/12 loss 0.4283 | val loss 0.4578 F1 0.7799 top1 0.8429 | 34s+4s
+[B01 seed0] ep 08/12 loss 0.4047 | val loss 0.4596 F1 0.7790 top1 0.8406 | 33s+4s
+[B01 seed0] ep 09/12 loss 0.3891 | val loss 0.4409 F1 0.7951 top1 0.8512 | 33s+5s
+[B01 seed0] ep 10/12 loss 0.3833 | val loss 0.4313 F1 0.7940 top1 0.8509 | 34s+4s
+[B01 seed0] ep 11/12 loss 0.3823 | val loss 0.4219 F1 0.7989 top1 0.8558 | 33s+5s
+[B01 seed0] ep 12/12 loss 0.3810 | val loss 0.4266 F1 0.7976 top1 0.8538 | 34s+4s
+[B01 seed0] XONG: best epoch 11, val macro-F1 0.7989, top1 0.8558, 34s/epoch
+[B07 seed0] ep 01/12 loss 1.8784 | val loss 1.4172 F1 0.3752 top1 0.5456 | 83s+31s
+[B07 seed0] ep 02/12 loss 0.7688 | val loss 1.2770 F1 0.4437 top1 0.5910 | 19s+4s
+[B07 seed0] ep 03/12 loss 0.5448 | val loss 1.1137 F1 0.5053 top1 0.6487 | 20s+3s
+[B07 seed0] ep 04/12 loss 0.4331 | val loss 0.9464 F1 0.5713 top1 0.7012 | 20s+3s
+[B07 seed0] ep 05/12 loss 0.3714 | val loss 1.0221 F1 0.5670 top1 0.6884 | 19s+4s
+[B07 seed0] ep 06/12 loss 0.3189 | val loss 0.8649 F1 0.5929 top1 0.7207 | 20s+3s
+[B07 seed0] ep 07/12 loss 0.2896 | val loss 0.8382 F1 0.6056 top1 0.7261 | 20s+3s
+[B07 seed0] ep 08/12 loss 0.2621 | val loss 0.8998 F1 0.5883 top1 0.7092 | 20s+3s
+[B07 seed0] ep 09/12 loss 0.2496 | val loss 0.8007 F1 0.6229 top1 0.7386 | 15s+2s
+[B07 seed0] ep 10/12 loss 0.2327 | val loss 0.8018 F1 0.6207 top1 0.7366 | 14s+2s
+[B07 seed0] ep 11/12 loss 0.2322 | val loss 0.8095 F1 0.6154 top1 0.7304 | 14s+2s
+[B07 seed0] ep 12/12 loss 0.2211 | val loss 0.7626 F1 0.6364 top1 0.7418 | 14s+2s
+[B07 seed0] XONG: best epoch 12, val macro-F1 0.6364, top1 0.7418, 23s/epoch
